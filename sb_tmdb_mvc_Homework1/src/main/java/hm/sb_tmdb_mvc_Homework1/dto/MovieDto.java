@@ -1,17 +1,21 @@
 package hm.sb_tmdb_mvc_Homework1.dto;
 
+import java.util.List;
+
 public class MovieDto {
 
 	private int id;
 	private String original_title;
 	private String overview;
+	private List<Integer> genreIds;
 	
 	
-	public MovieDto(int id, String original_title, String overview) {
+	public MovieDto(int id, String original_title, String overview, List<Integer> genreIds) {
 		super();
 		this.id = id;
 		this.original_title = original_title;
 		this.overview = overview;
+		this.genreIds = genreIds;
 	}
 
 
@@ -45,9 +49,20 @@ public class MovieDto {
 	}
 
 
+	public List<Integer> getGenreIds() {
+		return genreIds;
+	}
+
+
+	public void setGenreIds(List<Integer> genreIds) {
+		this.genreIds = genreIds;
+	}
+
+
 	@Override
 	public String toString() {
-		return "MovieDto [id=" + id + ", original_title=" + original_title + ", overview=" + overview + "]";
+		return "MovieDto [id=" + id + ", original_title=" + original_title + ", overview=" + overview + ", genreIds="
+				+ genreIds + "]";
 	}
 	
 }

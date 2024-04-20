@@ -1,10 +1,15 @@
 package hm.sb_tmdb_mvc_Homework1.model;
 
+import java.util.List;
+
 public class Movie {
 
 	private int id;
 	private String original_title;
 	private String overview;
+	private List<Integer> genre_ids;
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -28,6 +33,13 @@ public class Movie {
 	public void setOverview(String overview) {
 		this.overview = overview;
 	}
-	
+
+	public List<Integer> getGenre_ids() {
+		return genre_ids;
+	}
+
+	public void setGenre_ids(List<Integer> genre_ids) {
+		this.genre_ids = genre_ids;
+	}
 	
 }

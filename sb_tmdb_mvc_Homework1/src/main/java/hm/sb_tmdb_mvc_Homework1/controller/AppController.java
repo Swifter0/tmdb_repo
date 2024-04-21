@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import hm.sb_tmdb_mvc_Homework1.dto.GenreListDto;
 import hm.sb_tmdb_mvc_Homework1.dto.MovieDto;
+import hm.sb_tmdb_mvc_Homework1.dto.MovieListDto;
 import hm.sb_tmdb_mvc_Homework1.dto.UserDto;
 import hm.sb_tmdb_mvc_Homework1.service.AppService;
 
@@ -77,6 +78,34 @@ public class AppController {
 		
 		return "seenmovies.html";
 	}
+	
+	@GetMapping("/movie/search10movies")
+	public String searchResult(
+			Model model,
+			@RequestParam("title") String title
+			) {
+		
+		MovieListDto mListDto = service.getFirst10MoviesByTitle(title);
+		model.addAttribute("movielist", mListDto);
+		
+		return "movie.html";
+	}
+	
+	@GetMapping("/movie/persistseenmovie")
+	public String persistSeenMovie(
+			Model model,
+			@RequestParam("seenmovie") int movieId,
+			@RequestParam("userid") int userId
+			) {
+		
+		service.persistSeenMovieById(movieId,userId);
+		String success = "movie saved succesfully";
+		
+		model.addAttribute("success", success);
+		
+		return "movie.html";
+	}
+	
 	
 	
 }

@@ -8,11 +8,33 @@
 	
 	<body>
 	
-	<p th:text="${movie}"></p>
+	<p th:if="${movie} != null" th:text="${movie}"></p>
+	<p th:if="${movie} == null" text="Exception happened, movie ID doesn't exists"></p>
 	
+	<p>Search for Movie</p>
 	
+	<form action="/movie/search10movies" method="get">
 	
+		<input type="text" name="title" placeholder="Movie Title"/>
+		<input type="submit"/>
 	
+	</form>
+	
+	<p>Which one you want to save as seen?</p>
+	
+	<form action="/movie/persistseenmovie" method="get">
+	
+		<select name="seenmovie">
+		
+			<option th:each="movie : ${movielist.getMovies()}" th:value="${movie.getId()}" th:text="${movie.getOriginal_title()}"></option>
+		
+		</select>
+	
+		<input type="number" name="userid" placeholder="User ID"/>
+		<input type="submit"/>
+	</form>
+	
+	<p th:if="${success} != null" th:text="${success}"></p>
 	
 	</body>
 </html>

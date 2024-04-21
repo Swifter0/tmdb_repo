@@ -11,6 +11,7 @@ import hm.sb_tmdb_mvc_Homework1.database.Database;
 import hm.sb_tmdb_mvc_Homework1.dto.GenreDto;
 import hm.sb_tmdb_mvc_Homework1.dto.GenreListDto;
 import hm.sb_tmdb_mvc_Homework1.dto.MovieDto;
+import hm.sb_tmdb_mvc_Homework1.dto.MovieListDto;
 import hm.sb_tmdb_mvc_Homework1.dto.UserDto;
 import hm.sb_tmdb_mvc_Homework1.model.Genre;
 import hm.sb_tmdb_mvc_Homework1.model.Movie;
@@ -37,7 +38,15 @@ public class AppService {
 		MovieDto mDto = null;
 		
 		RestTemplate rt = new RestTemplate();
-		Movie movie = rt.getForObject("https://api.themoviedb.org/3/movie/" + movieId + "?api_key=" + API_KEY, Movie.class);
+		Movie movie = null;
+		
+		
+		try {
+			movie = rt.getForObject("https://api.themoviedb.org/3/movie/" + movieId + "?api_key=" + API_KEY, Movie.class);
+		}catch(Exception e) {
+			
+		}
+		
 		
 		mDto = convertMovieToMovieDto(movie);
 		
@@ -148,6 +157,55 @@ public class AppService {
 				);
 		
 		return uDto;
+	}
+
+
+
+	public MovieListDto getFirst10MoviesByTitle(String title) {
+		
+		MovieListDto mListDto = null;
+		
+		RestTemplate rt = new RestTemplate();
+		TMDBMovieResult movieResults =
+				rt.getForObject("https://api.themoviedb.org/3/search/movie?query=" + title + "&api_key=" + API_KEY, TMDBMovieResult.class);
+		
+		List<Movie> movies = movieResults.getResults();
+		List<MovieDto> movieDtos = new ArrayList<>();
+		
+		
+		
+		if(movies.size() >= 10) {
+			
+			for(int index = 0; index < 10; index++) {
+				
+				Movie currentMovie = movies.get(index);
+				MovieDto currentMovieDto = convertMovieToMovieDto(currentMovie);
+				movieDtos.add(currentMovieDto);
+				
+			}
+		}else {
+			
+			for(int index = 0; index < movies.size(); index++) {
+				
+				Movie currentMovie = movies.get(index);
+				MovieDto currentMovieDto = convertMovieToMovieDto(currentMovie);
+				movieDtos.add(currentMovieDto);
+				
+			}
+			
+		}
+		
+		mListDto = new MovieListDto(movieDtos);
+ 		
+		return mListDto;
+	}
+
+
+
+	public void persistSeenMovieById(int movieId, int userId) {
+		
+		db.persistSeenMovie(movieId,userId);
+		
 	}
 	
 	

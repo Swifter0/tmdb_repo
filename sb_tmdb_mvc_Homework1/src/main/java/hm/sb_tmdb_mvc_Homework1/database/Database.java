@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.MutationQuery;
 import org.hibernate.query.SelectionQuery;
 import org.springframework.stereotype.Repository;
 
@@ -53,6 +54,23 @@ public class Database {
 		session.close();
 		
 		return user;
+	}
+
+	public void persistSeenMovie(int movieId, int userId) {
+		
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+
+		MutationQuery query = 
+				session.createMutationQuery("INSERT INTO seenmovies (userid,filmid) VALUES ?1,?1");
+		query.setParameter(1, movieId);
+		query.setParameter(2, userId);
+		
+		query.executeUpdate();
+		
+		tx.commit();
+		session.close();
+		
 	}
 	
 	

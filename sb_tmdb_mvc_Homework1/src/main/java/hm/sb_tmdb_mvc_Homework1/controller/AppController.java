@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import hm.sb_tmdb_mvc_Homework1.dto.GenreListDto;
 import hm.sb_tmdb_mvc_Homework1.dto.MovieDto;
+import hm.sb_tmdb_mvc_Homework1.dto.UserDto;
 import hm.sb_tmdb_mvc_Homework1.service.AppService;
 
 @Controller
@@ -63,6 +64,18 @@ public class AppController {
 		model.addAttribute("genrelistdto", genreListDto);
 		
 		return "genres.html";
+	}
+	
+	@GetMapping("/movie/seen/{userid}")
+	public String getSeenMoviesByUserId(
+			Model model,
+			@PathVariable("userid") int userId
+			) {
+		
+		UserDto uDto = service.getSeenMoviesByUserId(userId);
+		model.addAttribute("user", uDto);
+		
+		return "seenmovies.html";
 	}
 	
 	

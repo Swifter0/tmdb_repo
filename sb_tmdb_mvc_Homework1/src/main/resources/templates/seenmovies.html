@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+	</head>
+	
+	
+	<body>
+	
+		<table>
+			<tr>
+				<th>Id</th>
+				<th>Original Title</th>
+				<th>Overview</th>
+			</tr>
+			
+			<tr th:each="moviedto : ${user.getSeenMovies()}">
+			
+				<td th:text="${moviedto.getId()}"></td>
+				<td th:text="${moviedto.getOriginal_title()}"></td>
+				<td th:text="${moviedto.getOverview()}"></td>
+			
+			</tr>
+			
+		
+		</table>
+	
+	
+	
+	
+	</body>
+</html>

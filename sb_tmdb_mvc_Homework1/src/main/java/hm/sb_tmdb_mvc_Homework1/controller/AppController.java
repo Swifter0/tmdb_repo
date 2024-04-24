@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import hm.sb_tmdb_mvc_Homework1.dto.GenreListDto;
 import hm.sb_tmdb_mvc_Homework1.dto.MovieDto;
 import hm.sb_tmdb_mvc_Homework1.dto.MovieListDto;
+import hm.sb_tmdb_mvc_Homework1.dto.MovieReleaseDateDto;
 import hm.sb_tmdb_mvc_Homework1.dto.UserDto;
 import hm.sb_tmdb_mvc_Homework1.service.AppService;
 
@@ -39,6 +40,7 @@ public class AppController {
 			) {
 		
 		MovieDto mDto = service.getMovieById(movieId);
+		
 		model.addAttribute("movie", mDto);
 		
 		return "movie.html";
@@ -106,6 +108,18 @@ public class AppController {
 		return "movie.html";
 	}
 	
+	
+	@GetMapping("/movie/releasedate/{movieid}")
+	public String getMovieReleaseDate(
+			Model model,
+			@RequestParam("movieid") int movieId
+			) {
+		
+		MovieReleaseDateDto mRDto = service.getMovieReleaseDateById(movieId);
+		model.addAttribute("releasedate", mRDto);
+		
+		return "releasedate.html";
+	}
 	
 	
 }

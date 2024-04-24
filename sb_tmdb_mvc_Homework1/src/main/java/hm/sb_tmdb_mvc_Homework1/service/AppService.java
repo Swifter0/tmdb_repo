@@ -12,9 +12,14 @@ import hm.sb_tmdb_mvc_Homework1.dto.GenreDto;
 import hm.sb_tmdb_mvc_Homework1.dto.GenreListDto;
 import hm.sb_tmdb_mvc_Homework1.dto.MovieDto;
 import hm.sb_tmdb_mvc_Homework1.dto.MovieListDto;
+import hm.sb_tmdb_mvc_Homework1.dto.MovieReleaseDateDto;
+import hm.sb_tmdb_mvc_Homework1.dto.ReleaseDatesDto;
 import hm.sb_tmdb_mvc_Homework1.dto.UserDto;
 import hm.sb_tmdb_mvc_Homework1.model.Genre;
 import hm.sb_tmdb_mvc_Homework1.model.Movie;
+import hm.sb_tmdb_mvc_Homework1.model.MovieCountry;
+import hm.sb_tmdb_mvc_Homework1.model.MovieReleaseDatesResult;
+import hm.sb_tmdb_mvc_Homework1.model.ReleaseDates;
 import hm.sb_tmdb_mvc_Homework1.model.TMDBGenreResult;
 import hm.sb_tmdb_mvc_Homework1.model.TMDBMovieResult;
 import hm.sb_tmdb_mvc_Homework1.model.User;
@@ -36,19 +41,23 @@ public class AppService {
 	public MovieDto getMovieById(int movieId) {
 		
 		MovieDto mDto = null;
-		
-		RestTemplate rt = new RestTemplate();
 		Movie movie = null;
 		
 		
 		try {
+			RestTemplate rt = new RestTemplate();
 			movie = rt.getForObject("https://api.themoviedb.org/3/movie/" + movieId + "?api_key=" + API_KEY, Movie.class);
 		}catch(Exception e) {
 			
+		//Hiba elkapva
+			
 		}
-		
-		
-		mDto = convertMovieToMovieDto(movie);
+
+		if(movie != null) {
+			
+			mDto = convertMovieToMovieDto(movie);
+			
+		}
 		
 		return mDto;
 	}
@@ -206,6 +215,31 @@ public class AppService {
 		
 		db.persistSeenMovie(movieId,userId);
 		
+	}
+
+
+
+	public MovieReleaseDateDto getMovieReleaseDateById(int movieId) {
+		
+		MovieReleaseDateDto mRDto = null;
+		List<ReleaseDatesDto> releaseDatesDto = new ArrayList<>();
+		
+		RestTemplate rt = new RestTemplate();
+		MovieReleaseDatesResult mReleaseDatesResult =
+				rt.getForObject("https://api.themoviedb.org/3/movie/" + movieId + "/release_dates?api_key=" + API_KEY, MovieReleaseDatesResult.class);
+		 
+		List<MovieCountry> mCountryResults = mReleaseDatesResult.getResults();
+		
+		for(int index = 0; index < mCountryResults.size(); index++) {
+			
+				
+		}
+				
+		 
+		 
+		 
+		
+		return mRDto;
 	}
 	
 	

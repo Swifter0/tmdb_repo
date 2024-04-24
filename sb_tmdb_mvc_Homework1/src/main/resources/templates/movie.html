@@ -22,18 +22,21 @@
 	
 	<p>Which one you want to save as seen?</p>
 	
-	<form action="/movie/persistseenmovie" method="get">
+	<div th:if="${movielist} != null">
 	
-		<select name="seenmovie">
+		<form action="/movie/persistseenmovie" method="get">
 		
-			<option th:each="movie : ${movielist.getMovies()}" th:value="${movie.getId()}" th:text="${movie.getOriginal_title()}"></option>
+			<select name="seenmovie">
+			
+				<option th:each="movie : ${movielist.getMovies()}" th:value="${movie.getId()}" th:text="${movie.getOriginal_title()}"></option>
+			
+			</select>
 		
-		</select>
-	
-		<input type="number" name="userid" placeholder="User ID"/>
-		<input type="submit"/>
-	</form>
-	
+			<input type="number" name="userid" placeholder="User ID"/>
+			<input type="submit"/>
+		</form>
+		
+	</div>
 	<p th:if="${success} != null" th:text="${success}"></p>
 	
 	</body>

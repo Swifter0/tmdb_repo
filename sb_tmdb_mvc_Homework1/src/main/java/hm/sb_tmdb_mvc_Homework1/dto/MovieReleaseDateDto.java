@@ -5,30 +5,33 @@ import java.util.List;
 public class MovieReleaseDateDto {
 
 	private int id;
-	private List<ReleaseDatesDto> results;
+	private List<CountryDto> countries;
 	
 	
-	
-	public MovieReleaseDateDto(int id, List<ReleaseDatesDto> results) {
+	public MovieReleaseDateDto(int id, List<CountryDto> countries) {
 		super();
 		this.id = id;
-		this.results = results;
+		this.countries = countries;
 	}
+
 
 	public int getId() {
 		return id;
 	}
-	
+
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	public List<ReleaseDatesDto> getResults() {
-		return results;
+
+
+	public List<CountryDto> getCountries() {
+		return countries;
 	}
-	
-	public void setResults(List<ReleaseDatesDto> results) {
-		this.results = results;
+
+
+	public void setCountries(List<CountryDto> countries) {
+		this.countries = countries;
 	}
 	
 }

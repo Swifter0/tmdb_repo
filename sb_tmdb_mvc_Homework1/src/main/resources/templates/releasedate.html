@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+	</head>
+	
+	
+	<body>
+	
+	<table>
+		<tr>
+			<th>MovieID</th>
+			<th>CountryCodeAndReleases</th>
+		</tr>
+		
+		<tr>
+		
+			<td th:text="${releasedate.getId()}"></td>
+			<td>
+				<table>
+				
+					<tr th:each="countrydtos : ${releasedate.getCountries()}">
+						<td th:text="${countrydtos.getCountryCode()}"></td>
+						<td>
+							<table>
+							
+								<tr th:each="releasedates : ${countrydtos.getReleaseDates()}">
+									<td th:text="${releasedates.getReleaseDate()}"></td>
+								</tr>
+							</table>
+						
+						
+						</td>
+					
+					
+					
+					</tr>
+						
+				
+				
+				</table>
+			
+			
+			
+			
+			
+			
+			</td>
+		
+		</tr>
+		
+	
+	
+	
+	
+	</table>
+	
+	
+	
+	
+	
+	
+	</body>
+</html>

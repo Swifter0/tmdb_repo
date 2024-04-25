@@ -112,7 +112,7 @@ public class AppController {
 	@GetMapping("/movie/releasedate/{movieid}")
 	public String getMovieReleaseDate(
 			Model model,
-			@RequestParam("movieid") int movieId
+			@PathVariable("movieid") int movieId
 			) {
 		
 		MovieReleaseDateDto mRDto = service.getMovieReleaseDateById(movieId);

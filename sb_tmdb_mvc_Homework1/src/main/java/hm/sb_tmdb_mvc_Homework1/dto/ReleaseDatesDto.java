@@ -2,26 +2,14 @@ package hm.sb_tmdb_mvc_Homework1.dto;
 
 public class ReleaseDatesDto {
 
-	private String country;
 	private String releaseDate;
 	private int type;
 	
 	
-	public ReleaseDatesDto(String country, String releaseDate, int type) {
+	public ReleaseDatesDto(String releaseDate, int type) {
 		super();
-		this.country = country;
 		this.releaseDate = releaseDate;
 		this.type = type;
-	}
-
-
-	public String getCountry() {
-		return country;
-	}
-
-
-	public void setCountry(String country) {
-		this.country = country;
 	}
 
 

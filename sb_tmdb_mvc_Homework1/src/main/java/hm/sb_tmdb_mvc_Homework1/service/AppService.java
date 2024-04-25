@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import hm.sb_tmdb_mvc_Homework1.database.Database;
+import hm.sb_tmdb_mvc_Homework1.dto.CountryDto;
 import hm.sb_tmdb_mvc_Homework1.dto.GenreDto;
 import hm.sb_tmdb_mvc_Homework1.dto.GenreListDto;
 import hm.sb_tmdb_mvc_Homework1.dto.MovieDto;
@@ -222,22 +223,46 @@ public class AppService {
 	public MovieReleaseDateDto getMovieReleaseDateById(int movieId) {
 		
 		MovieReleaseDateDto mRDto = null;
-		List<ReleaseDatesDto> releaseDatesDto = new ArrayList<>();
 		
 		RestTemplate rt = new RestTemplate();
 		MovieReleaseDatesResult mReleaseDatesResult =
 				rt.getForObject("https://api.themoviedb.org/3/movie/" + movieId + "/release_dates?api_key=" + API_KEY, MovieReleaseDatesResult.class);
 		 
-		List<MovieCountry> mCountryResults = mReleaseDatesResult.getResults();
+		List<MovieCountry> tmdbMCountry = mReleaseDatesResult.getResults();
+		List<CountryDto> countryDtoList = new ArrayList<>();
 		
-		for(int index = 0; index < mCountryResults.size(); index++) {
+		for(int mainindex = 0; mainindex < tmdbMCountry.size(); mainindex++) {
 			
+			MovieCountry currentMCountry = tmdbMCountry.get(mainindex);
+			
+			List<ReleaseDates> releaseDList = currentMCountry.getRelease_dates();
+			List<ReleaseDatesDto> releaseDDtoList = new ArrayList<>();
+			
+			for(int secindex = 0; secindex < releaseDList.size(); secindex++) {
+				
+				ReleaseDates currentRDate = releaseDList.get(secindex);
+				
+				ReleaseDatesDto releaseDDto = new ReleaseDatesDto(
+						currentRDate.getRelease_date().substring(0,10),
+						currentRDate.getType()
+						);
+				
+				releaseDDtoList.add(releaseDDto);
+			}
+			
+			CountryDto countryDto = new CountryDto(
+					currentMCountry.getIso_3166_1(),
+					releaseDDtoList
+					);
+			
+			countryDtoList.add(countryDto);
 				
 		}
 				
-		 
-		 
-		 
+		 mRDto = new MovieReleaseDateDto(
+				 movieId,
+				 countryDtoList
+				 );
 		
 		return mRDto;
 	}
